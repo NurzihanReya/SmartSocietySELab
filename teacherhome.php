@@ -33,9 +33,9 @@ if(isset($_SESSION['username'])){
     header("Location: createevent.php");
   }
 
-  if (isset($_POST['createnoticebutton'])) {
-    header("Location: createnotice.php");
-  }
+  // if (isset($_POST['createnoticebutton'])) {
+  //   header("Location: createnotice.php");
+  // }
   
   $_SESSION['username'] = $username;
   $_SESSION['type'] = $type;
@@ -49,99 +49,99 @@ else{
   exit();
 }
 
-if(isset($_POST['submitsearch'])){
-  if(!empty($_POST['searchtext'])){
-    $searchtype = filter_input(INPUT_POST, 'searchtype', FILTER_SANITIZE_STRING);
-    $searchtext=mysqli_real_escape_string($conn,$_POST['searchtext']);
-    if($searchtype=="Students"){
-      $sql = "SELECT *
-              FROM student
-              WHERE name LIKE '%$searchtext%'
-                OR s_id LIKE '%$searchtext%'";
-      $result = mysqli_query($conn, $sql);
-      if ($result->num_rows > 0) {
-        $row = mysqli_fetch_assoc($result);
-        $_SESSION['searchtext'] = $_POST['searchtext'];
-        $_SESSION['searchtype'] = "students";
-        header("Location:view_all_profiles.php");
-      }
-      else {
-        echo "<script>alert('Sorry. We do not have that information in our database.')</script>";
-      }
-    }
-    else if($searchtype=="Verifiers"){
-      $sql = "SELECT *
-              FROM verifier
-              WHERE name LIKE '%$searchtext%'
-                OR v_id LIKE '%$searchtext%'";
-      $result = mysqli_query($conn, $sql);
-      echo ("Happy1");
-      if ($result->num_rows > 0) {
-        $row = mysqli_fetch_assoc($result);
-        $_SESSION['searchtext'] = $_POST['searchtext'];
-        $_SESSION['searchtype'] = "verifiers";
-        echo "Happy2";
-        header("Location:view_all_profiles.php");
-      }
-      else {
-        echo "<script>alert('Sorry. We do not have that information in our database.')</script>";
-      }
-    }
-    else if($searchtype=="Achievements"){
-      $sql = "SELECT *
-              FROM achievements
-              WHERE name LIKE '%$searchtext%'
-                OR keywords LIKE '%$searchtext%'";
-      $result = mysqli_query($conn, $sql);
-      if ($result->num_rows > 0) {
-        $row = mysqli_fetch_assoc($result);
-        $_SESSION['searchtext'] = $_POST['searchtext'];
-        $_SESSION['searchtype'] = "achievements";
-        header("Location: view_all_profiles.php");
-      }
-      else {
-        echo "<script>alert('Sorry. We do not have that information in our database.')</script>";
-      }
-    }
-    else if($searchtype=="Events"){
-      $sql = "SELECT *
-              FROM events
-              WHERE name LIKE '%$searchtext%'
-                OR summary LIKE '%$searchtext%'
-                OR keywords LIKE '%$searchtext%'";
-      $result = mysqli_query($conn, $sql);
-      if ($result->num_rows > 0) {
-        $row = mysqli_fetch_assoc($result);
-        $_SESSION['searchtext'] = $_POST['searchtext'];
-        $_SESSION['searchtype'] = "events";
-        header("Location:view_all_events.php");
-      }
-      else {
-        echo "<script>alert('Sorry. We do not have that information in our database.')</script>";
-      }
-    }
-    else if($searchtype=="Notices"){
-      $sql = "SELECT *
-              FROM notices
-              WHERE name LIKE '%$searchtext%'
-                OR content LIKE '%$searchtext%'
-                OR keywords LIKE '%$searchtext%'";
-      $result = mysqli_query($conn, $sql);
-      if ($result->num_rows > 0) {
-        $row = mysqli_fetch_assoc($result);
-        $_SESSION['searchtext'] = $_POST['searchtext'];
-        $_SESSION['searchtype'] = "notices";
-        header("Location: view_all_notices.php");
-      }
-      else {
-        echo "<script>alert('Sorry. We do not have that information in our database.')</script>";
-      }
-    }
-    else{
-      echo "<script>alert('Please choose an option to search.')</script>";
-    }
-  }
-}
+// if(isset($_POST['submitsearch'])){
+//   if(!empty($_POST['searchtext'])){
+//     $searchtype = filter_input(INPUT_POST, 'searchtype', FILTER_SANITIZE_STRING);
+//     $searchtext=mysqli_real_escape_string($conn,$_POST['searchtext']);
+//     if($searchtype=="Students"){
+//       $sql = "SELECT *
+//               FROM student
+//               WHERE name LIKE '%$searchtext%'
+//                 OR s_id LIKE '%$searchtext%'";
+//       $result = mysqli_query($conn, $sql);
+//       if ($result->num_rows > 0) {
+//         $row = mysqli_fetch_assoc($result);
+//         $_SESSION['searchtext'] = $_POST['searchtext'];
+//         $_SESSION['searchtype'] = "students";
+//         header("Location:view_all_profiles.php");
+//       }
+//       else {
+//         echo "<script>alert('Sorry. We do not have that information in our database.')</script>";
+//       }
+//     }
+//     else if($searchtype=="Verifiers"){
+//       $sql = "SELECT *
+//               FROM verifier
+//               WHERE name LIKE '%$searchtext%'
+//                 OR v_id LIKE '%$searchtext%'";
+//       $result = mysqli_query($conn, $sql);
+//       echo ("Happy1");
+//       if ($result->num_rows > 0) {
+//         $row = mysqli_fetch_assoc($result);
+//         $_SESSION['searchtext'] = $_POST['searchtext'];
+//         $_SESSION['searchtype'] = "verifiers";
+//         echo "Happy2";
+//         header("Location:view_all_profiles.php");
+//       }
+//       else {
+//         echo "<script>alert('Sorry. We do not have that information in our database.')</script>";
+//       }
+//     }
+//     else if($searchtype=="Achievements"){
+//       $sql = "SELECT *
+//               FROM achievements
+//               WHERE name LIKE '%$searchtext%'
+//                 OR keywords LIKE '%$searchtext%'";
+//       $result = mysqli_query($conn, $sql);
+//       if ($result->num_rows > 0) {
+//         $row = mysqli_fetch_assoc($result);
+//         $_SESSION['searchtext'] = $_POST['searchtext'];
+//         $_SESSION['searchtype'] = "achievements";
+//         header("Location: view_all_profiles.php");
+//       }
+//       else {
+//         echo "<script>alert('Sorry. We do not have that information in our database.')</script>";
+//       }
+//     }
+//     else if($searchtype=="Events"){
+//       $sql = "SELECT *
+//               FROM events
+//               WHERE name LIKE '%$searchtext%'
+//                 OR summary LIKE '%$searchtext%'
+//                 OR keywords LIKE '%$searchtext%'";
+//       $result = mysqli_query($conn, $sql);
+//       if ($result->num_rows > 0) {
+//         $row = mysqli_fetch_assoc($result);
+//         $_SESSION['searchtext'] = $_POST['searchtext'];
+//         $_SESSION['searchtype'] = "events";
+//         header("Location:view_all_events.php");
+//       }
+//       else {
+//         echo "<script>alert('Sorry. We do not have that information in our database.')</script>";
+//       }
+//     }
+//     else if($searchtype=="Notices"){
+//       $sql = "SELECT *
+//               FROM notices
+//               WHERE name LIKE '%$searchtext%'
+//                 OR content LIKE '%$searchtext%'
+//                 OR keywords LIKE '%$searchtext%'";
+//       $result = mysqli_query($conn, $sql);
+//       if ($result->num_rows > 0) {
+//         $row = mysqli_fetch_assoc($result);
+//         $_SESSION['searchtext'] = $_POST['searchtext'];
+//         $_SESSION['searchtype'] = "notices";
+//         header("Location: view_all_notices.php");
+//       }
+//       else {
+//         echo "<script>alert('Sorry. We do not have that information in our database.')</script>";
+//       }
+//     }
+//     else{
+//       echo "<script>alert('Please choose an option to search.')</script>";
+//     }
+//   }
+// }
 
 mysqli_close($conn);
 
@@ -216,7 +216,7 @@ https://templatemo.com/tm-546-sixteen-clothing
                             style="position:relative; width: 200px; padding:6px; border-radius:5px;">
                         <!-- <div class="col col-lg-6"> -->
                         <!-- <label for="exampleFormControlInput1" class="form-label">Choose From Below</label> -->
-                        <select class="form-select" name="searchtype" aria-label="Default select example"
+                        <!-- <select class="form-select" name="searchtype" aria-label="Default select example"
                             style="position:relative; height:40px; width: 150px">
                             <option selected>Filter</option>
                             <option value="Students">Students</option>
@@ -224,7 +224,7 @@ https://templatemo.com/tm-546-sixteen-clothing
                             <option value="Achievements">Achievements</option>
                             <option value="Events">Events</option>
                             <option value="Notices">Notices</option>
-                        </select>
+                        </select> -->
                         <!-- </div> -->
                         <!-- <button name="submitfiltersearch" class="btn">Search</button> -->
                         <button name="submitsearch" class="btn"
@@ -263,7 +263,7 @@ https://templatemo.com/tm-546-sixteen-clothing
                     <div class="nav-item dropdown">
                         <a href="profile.php" data-toggle="dropdown"
                             class="nav-item nav-link dropdown-toggle user-action"><img src="images/student.jpg"
-                                class="avatar" alt="Avatar"> Student </a>
+                                class="avatar" alt="Avatar"> User </a>
                     </div>
                     <?php
         }
@@ -272,7 +272,7 @@ https://templatemo.com/tm-546-sixteen-clothing
                     <div class="nav-item dropdown">
                         <a href="profile.php" data-toggle="dropdown"
                             class="nav-item nav-link dropdown-toggle user-action"><img src="images/verifier.jpg"
-                                class="avatar" alt="Avatar"> Verifier </a>
+                                class="avatar" alt="Avatar"> Organization </a>
                     </div>
                     <?php
         }
@@ -320,7 +320,7 @@ https://templatemo.com/tm-546-sixteen-clothing
                 <div class="col-md-12">
                     <div class="section-heading">
                         <h2>Blocks</h2>
-                        <a href="view_all_events.php">View All Blocks<i class="fa fa-angle-right"></i></a>
+                        <!-- <a href="view_all_events.php">View All Blocks<i class="fa fa-angle-right"></i></a> -->
                     </div>
                 </div>
                 <?php foreach($blocks as $block){ ?>
@@ -329,23 +329,10 @@ https://templatemo.com/tm-546-sixteen-clothing
                         <div class="thumb-container">
                             <img src="./block_images/<?php echo $block['image']; ?>" alt=""
                                 style="width:350px;height: 250px;border-radius: 10px; border: 3px solid #f08c09; padding: 3px;">
-                            <div class="hover-effect" style="border-radius: 10px; width:346px;height: 246px;">
-                                <div class="hover-content">
-
-                                    <div class="para">
-                                        <h4>
-                                            <p><?php //echo $event['event_date'] ?><br></br>
-                                                <?php //echo $event['event_time'] ?><br></br>
-                                                <?php //echo $event['location'] ?>
-                                            </p>
-                                        </h4>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
                         <div class="down-content">
                             <a
-                                href="servicemiddleman.php?b_id=<?php echo $block['b_id'] ?>"><?php echo htmlspecialchars($block['b_id']) ?></a>
+                                href="servicemiddleman.php?b_id=<?php echo $block['b_id'] ?>"><?php echo ''.$block['name'].''; ?></a>
                         </div>
                     </div>
                 </div>

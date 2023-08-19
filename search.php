@@ -1,133 +1,58 @@
 <?php
-
 include('db_connect.php');
 
 session_start();
+        $noresult = true;
+        $query = $_GET["search"];
+        $sql = "select * from organizations where match (name) against ('$query')"; 
+        $result = mysqli_query($conn, $sql);
+        while($row = mysqli_fetch_assoc($result)){
+            $noresult = false;
+            $name = $row['name'];
+            $desc = $row['thread_desc']; 
+            $thread_id= $row['thread_id']; 
+            $url = "threads.php?threadid=". $thread_id;
+        }
 
-if (isset($_SESSION['username'])) {
-  $username = mysqli_real_escape_string($conn, $_SESSION['username']);
-  $type = $_SESSION['type'];
+            // Display the search result
+            ?>
+<div class="col-md-4">
+    <div class="team-member">
+        <div class="thumb-container">
+            <img src="./block_images/   <?php echo $block['image']; ?> alt="
+                style=" width:350px;height: 250px;border-radius: 10px; border: 3px solid #f08c09; padding: 3px;">
+            <div class="hover-effect" style="border-radius: 10px; width:346px;height: 246px;">
+                <div class="hover-content">
 
-  if ($type=="user") {
-    $sql = "SELECT * FROM users WHERE name='$username'";
-    $result = mysqli_query($conn, $sql);
-    $user = mysqli_fetch_assoc($result);
-  } else {
-    $sql = "SELECT * FROM organizations WHERE name='$username'";
-    $result = mysqli_query($conn, $sql);
-    $user = mysqli_fetch_assoc($result);
-  }
+                    <div class="para">
+                        <h6>
+                            <?php //echo $event['event_date'] ?><br></br>
+                            <?php //echo $event['event_time'] ?><br></br>
+                            <?php //echo $event['location'] ?>
+                        </h6>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="down-content">
+            <a
+                href="servicemiddleman.php?b_id=<?php echo $block['b_id'] ?>"><?php echo htmlspecialchars($block['b_id']) ?></a>
+        </div>
+    </div>
+</div>
+<?php
 
-  $sql = "SELECT *
-          FROM blocks";
-  $result = mysqli_query($conn, $sql);
-  $blocks = mysqli_fetch_all($result, MYSQLI_ASSOC);
+if($noresult)
+{
+echo'<div class="jumbotron jumbotron-fluid">
+    <div class="container">
+        <p class="display-4">No Results Found</p>
 
-  // $sql = "SELECT *
-  //         FROM notices
-  //         ORDER BY post_date DESC LIMIT 3";
-  // $result = mysqli_query($conn, $sql);
-  // $notices = mysqli_fetch_all($result, MYSQLI_ASSOC);
-
-  $_SESSION['username'] = $username;
-  $_SESSION['type'] = $type;
-  // mysqli_free_result($result);
-} else {
-  header("HTTP/1.0 404 Not Found");
-  echo "<h1>404 Not Found</h1>";
-  echo "The page that you have requested could not be found.";
-  exit();
+    </div>
+</div>';
 }
-
-// if (isset($_POST['submitsearch'])) {
-//   if (!empty($_POST['searchtext'])) {
-//     $searchtype = filter_input(INPUT_POST, 'searchtype', FILTER_SANITIZE_STRING);
-//     $searchtext = mysqli_real_escape_string($conn, $_POST['searchtext']);
-//     if ($searchtype == "Students") {
-//       $sql = "SELECT *
-//               FROM student
-//               WHERE name LIKE '%$searchtext%'
-//                 OR s_id LIKE '%$searchtext%'";
-//       $result = mysqli_query($conn, $sql);
-//       if ($result->num_rows > 0) {
-//         $row = mysqli_fetch_assoc($result);
-//         $_SESSION['searchtext'] = $_POST['searchtext'];
-//         $_SESSION['searchtype'] = "students";
-//         header("Location:view_all_profiles.php");
-//       } else {
-//         echo "<script>alert('Sorry. We do not have that information in our database.')</script>";
-//       }
-//     } else if ($searchtype == "Verifiers") {
-//       $sql = "SELECT *
-//               FROM verifier
-//               WHERE name LIKE '%$searchtext%'
-//                 OR v_id LIKE '%$searchtext%'";
-//       $result = mysqli_query($conn, $sql);
-//       echo ("Happy1");
-
-      
-//       if ($result->num_rows > 0) {
-//         $row = mysqli_fetch_assoc($result);
-//         $_SESSION['searchtext'] = $_POST['searchtext'];
-//         $_SESSION['searchtype'] = "verifiers";
-//         echo "Happy2";
-//         header("Location:view_all_profiles.php");
-//       } else {
-//         echo "<script>alert('Sorry. We do not have that information in our database.')</script>";
-//       }
-//     } else if ($searchtype == "Achievements") {
-//       $sql = "SELECT *
-//               FROM achievements
-//               WHERE name LIKE '%$searchtext%'
-//                 OR keywords LIKE '%$searchtext%'";
-//       $result = mysqli_query($conn, $sql);
-//       if ($result->num_rows > 0) {
-//         $row = mysqli_fetch_assoc($result);
-//         $_SESSION['searchtext'] = $_POST['searchtext'];
-//         $_SESSION['searchtype'] = "achievements";
-//         header("Location: view_all_profiles.php");
-//       } else {
-//         echo "<script>alert('Sorry. We do not have that information in our database.')</script>";
-//       }
-//     } else if ($searchtype == "Events") {
-//       $sql = "SELECT *
-//               FROM events
-//               WHERE name LIKE '%$searchtext%'
-//                 OR summary LIKE '%$searchtext%'
-//                 OR keywords LIKE '%$searchtext%'";
-//       $result = mysqli_query($conn, $sql);
-//       if ($result->num_rows > 0) {
-//         $row = mysqli_fetch_assoc($result);
-//         $_SESSION['searchtext'] = $_POST['searchtext'];
-//         $_SESSION['searchtype'] = "events";
-//         header("Location:view_all_events.php");
-//       } else {
-//         echo "<script>alert('Sorry. We do not have that information in our database.')</script>";
-//       }
-//     } else if ($searchtype == "Notices") {
-//       $sql = "SELECT *
-//               FROM notices
-//               WHERE name LIKE '%$searchtext%'
-//                 OR content LIKE '%$searchtext%'
-//                 OR keywords LIKE '%$searchtext%'";
-//       $result = mysqli_query($conn, $sql);
-//       if ($result->num_rows > 0) {
-//         $row = mysqli_fetch_assoc($result);
-//         $_SESSION['searchtext'] = $_POST['searchtext'];
-//         $_SESSION['searchtype'] = "notices";
-//         header("Location: view_all_notices.php");
-//       } else {
-//         echo "<script>alert('Sorry. We do not have that information in our database.')</script>";
-//       }
-//     } else {
-//       echo "<script>alert('Please choose an option to search.')</script>";
-//     }
-//   }
-// }
-
-// mysqli_close($conn);
-
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -242,7 +167,7 @@ https://templatemo.com/tm-546-sixteen-clothing
                     <div class="nav-item dropdown">
                         <a href="profile.php" data-toggle="dropdown"
                             class="nav-item nav-link dropdown-toggle user-action"><img src="images/student.jpg"
-                                class="avatar" alt="Avatar"> User </a>
+                                class="avatar" alt="Avatar"> Student </a>
                     </div>
                     <?php
         }
@@ -251,7 +176,7 @@ https://templatemo.com/tm-546-sixteen-clothing
                     <div class="nav-item dropdown">
                         <a href="profile.php" data-toggle="dropdown"
                             class="nav-item nav-link dropdown-toggle user-action"><img src="images/verifier.jpg"
-                                class="avatar" alt="Avatar"> Organization </a>
+                                class="avatar" alt="Avatar"> Verifier </a>
                     </div>
                     <?php
         }
@@ -356,62 +281,6 @@ https://templatemo.com/tm-546-sixteen-clothing
                   </div>
                 </div>
               <?php //} ?> -->
-
-                <div class="best-features">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="section-heading">
-                                    <h2>Our Main Goals:</h2>
-                                </div>
-                            </div>
-                            <div class="services">
-                                <div class="container">
-                                    <div class="row">
-                                        <div class="col-md-4">
-                                            <div class="service-item">
-                                                <div class="icon">
-                                                    <i class="fa fa-gear"></i>
-                                                </div>
-                                                <div class="down-content">
-                                                    <h4>Store Achievements</h4>
-                                                    <p>Upload your favourite achievements to be verified.</p>
-
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="service-item">
-                                                <div class="icon">
-                                                    <i class="fa fa-gear"></i>
-                                                </div>
-                                                <div class="down-content">
-                                                    <h4>Verified Platform</h4>
-                                                    <p>All the achievements will be verified; easy for you to make a
-                                                        reliable CV.</p>
-
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="service-item">
-                                                <div class="icon">
-                                                    <i class="fa fa-gear"></i>
-                                                </div>
-                                                <div class="down-content">
-                                                    <h4>Teacher-Student Connection</h4>
-                                                    <p>Contact your teachers to verify your achievements.</p>
-
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
 
 
 
