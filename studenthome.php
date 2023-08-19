@@ -424,30 +424,28 @@ https://templatemo.com/tm-546-sixteen-clothing
             <footer>
                 <div class="container">
                     <div class="row">
-                        <div class="col-sm-6 col-md-3 item">
-                            <h3>SS</h3>
+                        <div class="col-sm-12 col-md-3 item">
+                            <h3>Smart Society</h3>
                             <ul>
-                                <li><a href="#">Maps</a></li>
-                                <li><a href="#">Organization</a></li>
-                                <li><a href="#">Emergency</a></li>
+                                <li>Software Engineering Lab</li>
+                                <li>Section B</li>
+
+                            </ul>
+
+                        </div>
+                        <div class="col-sm-12 col-md-3  item">
+                            <h3>Team Member</h3>
+                            <ul>
+                                <li><a href="#">Abtahi Ahmed</a></li>
+                                <li><a href="#">Wasi Uddin</a></li>
+                                <li><a href="#">Nurzihan Fatema</a></li>
+                                <li><a href="#">Mysun Mashira</a></li>
                             </ul>
                         </div>
-                        <div class="col-sm-6 col-md-3 item">
-                            <h3>Team Members</h3>
-                            <ul>
-                                <li><a href="#">Wasi</a></li>
-                                <li><a href="#">Abtahi</a></li>
-                                <li><a href="#">Nurzihan</a></li>
-                                <li><a href="#">Mysun</a></li>
-                            </ul>
-                        </div>
-                        <div class="col-md-6 item text">
-                            <h3>SS</h3>
-                            <!-- <p>Praesent sed lobortis mi. Suspendisse vel placerat ligula. Vivamus ac sem lacus. Ut vehicula rhoncus elementum. Etiam quis tristique lectus. Aliquam in arcu eget velit pulvinar dictum vel in justo.</p> -->
-                        </div>
+
                         <!-- <div class="col item social"><a href="#"><i class="icon ion-social-facebook"></i></a><a href="#"><i class="icon ion-social-twitter"></i></a><a href="#"><i class="icon ion-social-snapchat"></i></a><a href="#"><i class="icon ion-social-instagram"></i></a></div> -->
                     </div>
-                    <p class="copyright">Company Name © 2018</p>
+                    <p class="copyright">UIU CSE © 2023</p>
                 </div>
             </footer>
         </div>
