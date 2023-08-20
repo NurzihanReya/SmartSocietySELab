@@ -7,7 +7,7 @@
 
 // //Create a connectio
 // $conn = new mysqli($server, $user, $pass, $database);
-$conn = mysqli_connect('localhost', 'root', '', 'smartsociety');
+$conn = mysqli_connect('localhost', 'root', '', 'smartsociety1');
 
 //Check Connection
 if (!$conn) {

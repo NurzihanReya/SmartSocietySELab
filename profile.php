@@ -46,17 +46,17 @@ if (isset($_SESSION['username'])) {
     // $department = $user['department'];
     // $gender = $user['gender'];
     // $dob = $user['dob'];
-    // $sqlprojects = "SELECT * FROM student INNER JOIN achievements ON student.s_id=achievements.s_id WHERE student.s_id='$user[s_id]' AND achievements.category LIKE 'project'";
-    // $result = mysqli_query($conn, $sqlprojects);
-    // $userprojects = mysqli_fetch_all($result, MYSQLI_ASSOC);
+    $sqlhospital = "SELECT * FROM users INNER JOIN services ON users.u_id=services.s_id WHERE users.u_id='$user[u_id]' AND services.type='Hospital'";
+    $result = mysqli_query($conn, $sqlhospital);
+    $userhospital = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
-    // $sqlinternships = "SELECT * FROM student INNER JOIN achievements ON student.s_id=achievements.s_id WHERE student.s_id='$user[s_id]' AND achievements.category LIKE 'internship'";
-    // $result = mysqli_query($conn, $sqlinternships);
-    // $userinternships = mysqli_fetch_all($result, MYSQLI_ASSOC);
+    $sqlpolicestations = "SELECT * FROM users INNER JOIN services ON users.u_id=services.s_id WHERE users.u_id='$user[u_id]' AND services.type='Police Station'";
+    $result = mysqli_query($conn, $sqlpolicestations);
+    $userpolicestations = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
-    // $sqlawards = "SELECT * FROM student INNER JOIN achievements ON student.s_id=achievements.s_id WHERE student.s_id='$user[s_id]' AND achievements.category LIKE 'honors and awards'";
-    // $result = mysqli_query($conn, $sqlawards);
-    // $userawards = mysqli_fetch_all($result, MYSQLI_ASSOC);
+    $sqlfirestations = "SELECT * FROM users INNER JOIN services ON users.u_id=services.s_id WHERE users.u_id='$user[u_id]' AND services.type='Fire Station'";
+    $result = mysqli_query($conn, $sqlfirestations);
+    $userfirestations = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
     // $sqlextracurricularactivities = "SELECT * FROM student INNER JOIN achievements ON student.s_id=achievements.s_id WHERE student.s_id='$user[s_id]' AND achievements.category LIKE 'extra-curricular activities'";
     // $result = mysqli_query($conn, $sqlextracurricularactivities);
@@ -283,26 +283,25 @@ if (isset($_POST['submitsearch'])) {
                         <form method="POST">
                             <div class="search">
                                 <input type="text" name="searchtext" id="search" placeholder="Search"
-                                    style="position:relative; top: 40px; width: 200px; left:-50px; padding:6px; border-radius:5px;">
+                                    style="position:relative;  width: 200px; left:-50px; padding:6px; border-radius:5px;">
 
 
 
                                 <!-- <div class="col col-lg-6"> -->
                                 <!-- <label for="exampleFormControlInput1" class="form-label">Choose From Below</label> -->
-                                <select class="form-select" name="searchtype" aria-label="Default select example"
-                                    style="position:relative; left: 170px; width: 150px">
-                                    <option selected>Filter</option>
-                                    <option value="Students">Students</option>
-                                    <option value="Verifiers">Verifiers</option>
-                                    <option value="Achievements">Achievements</option>
-                                    <option value="Events">Events</option>
-                                    <option value="Notices">Notices</option>
-                                </select>
+                                <!-- <select class="form-select" name="searchtype" aria-label="Default select example" style="position:relative; left: 170px; width: 150px">
+                  <option selected>Filter</option>
+                  <option value="Students">Students</option>
+                  <option value="Verifiers">Verifiers</option>
+                  <option value="Achievements">Achievements</option>
+                  <option value="Events">Events</option>
+                  <option value="Notices">Notices</option>
+                </select> -->
                                 <!-- </div> -->
 
                                 <!-- <button name="submitfiltersearch" class="btn">Search</button> -->
                                 <button name="submitsearch" class="btn"
-                                    style="position:relative; top: -40px; left: 280px; background-color:#FFF; ">Search</button>
+                                    style="position:left;  left: 280px; background-color:#FFF; ">Search</button>
                             </div>
                         </form>
 
@@ -327,11 +326,12 @@ if (isset($_POST['submitsearch'])) {
                             <a href="profile.php" class="nav-item nav-link"><i
                                     class="fa fa-users"></i><span>Profile</span></a>
                             <a href="view_all_events.php" class="nav-item nav-link"><i
-                                    class="fa fa-briefcase"></i><span>Events</span></a>
-                            <a href="view_all_notices.php" class="nav-item nav-link"><i
-                                    class="fa fa-envelope"></i><span>Notices</span></a>
+                                    class="fa fa-briefcase"></i><span>Blocks</span></a>
+                            <!-- <a href="view_all_notices.php" class="nav-item nav-link"><i class="fa fa-envelope"></i><span>Notices</span></a> -->
                             <a href="notification.php" class="nav-item nav-link"><i
                                     class="fa fa-bell"></i><span>Notifications</span></a>
+                            <a href="allusers.html" class="nav-item nav-link"><i class="fa fa-users"></i><span>All
+                                    Users</span></a>
                             <a href="logout.php" class="nav-item nav-link"><i
                                     class="fa-solid fa-right-from-bracket"></i><span>Log Out</span></a>
                             <?php
@@ -398,11 +398,7 @@ if (isset($_POST['submitsearch'])) {
                                         <form action="pdf.php" method="GET" target="_blank">
                                             <div class="d-print-none" style="float: right inherit;">
 
-                                                <!-- <a class="btn btn-outline-light btn-lg shadow-sm mt-1 me-3"
-                                                    style="text-decoration: none; color: #FFF"
-                                                    href="pdf.php?s_id=<?php echo $user["s_id"] ?>"
-                                                    data-aos="fade-right" data-aos-delay="700">Generate CV</a> -->
-
+                                                <!-- <a class="btn btn-outline-light btn-lg shadow-sm mt-1 me-3" style="text-decoration: none; color: #FFF" href="pdf.php?s_id=<?php //echo $user["s_id"] ?>" data-aos="fade-right" data-aos-delay="700">Generate CV</a> -->
                                                 <!-- <a class="btn btn-info btn-lg shadow-sm mt-1" name="changeprofilepicturebutton" data-aos="fade-left" data-aos-delay="700">Change Profile Picture</a> -->
                                                 <!-- <label for="exampleFormControlInput1" class="form-label">Select Image </label>
                       <form action="" method="POST">
@@ -504,307 +500,210 @@ if (isset($_POST['submitsearch'])) {
                 </div>
             </div>
 
-
-            <?php
-      if ($type=="user") {
-      ?>
-
-            <?php
-      }
-      ?>
-
             <?php
       if ($type=="user") {
       ?>
             <!-- <div class="shadow-1-strong bg-white my-5 p-5" id="education">
-                <div class="education-section">
-                    <h2 class="h2 fw-light mb-4">Skills:</h2>
-                    <div class="List">
-                        <ol> -->
-            <?php
-                // $sqlallkeywords = "SELECT achievements.keywords FROM student INNER JOIN achievements ON student.s_id=achievements.s_id WHERE student.s_id='$username'";
-                // $result = mysqli_query($conn, $sqlallkeywords);
-                // $userallkeywords = mysqli_fetch_all($result, MYSQLI_ASSOC);
-                // foreach ($userallkeywords as $rowkeywords) {
-                //   foreach ($rowkeywords as $singlekeyword) {
-                //     echo $singlekeyword . " ";
-                //   }
-                // }
+          <div class="education-section">
+            <h2 class="h2 fw-light mb-4">Skills:</h2>
+            <div class="List">
+              <ol>
+                <?php
+                //$sqlallkeywords = "SELECT achievements.keywords FROM student INNER JOIN achievements ON student.s_id=achievements.s_id WHERE student.s_id='$username'";
+                //$result = mysqli_query($conn, $sqlallkeywords);
+                //$userallkeywords = mysqli_fetch_all($result, MYSQLI_ASSOC);
+                //foreach ($userallkeywords as $rowkeywords) {
+                //  foreach ($rowkeywords as $singlekeyword) {
+                //    echo $singlekeyword . " ";
+                //  }
+                //}
                 ?>
-            </ol>
+              </ol>
+            </div>
+          </div>
+        </div> -->
         </div>
-    </div>
-    </div>
 
-
-    </div>
-    <!-- <h1 class="h2 fw-light mb-4">Achievements</h1> -->
-    <!-- <form action="" method="POST"> -->
-    <!-- <div class="input-group" style="float: right inherit;"> -->
-    <!-- <button name="submitachievement" href="submit.php" class="btn1">Add Achievement</button> -->
-    <!---style="color: grey; width: 70px" <a style="color: grey; width: 70px" name="submit1" href="edit_profile.php" > Edit Profile</a> -->
-    <!-- </div> -->
-    <!-- <div class="shadow-1-strong bg-white my-5 p-5" id="experience">
-            <div class="work-experience-section"> -->
-    <!-- <h2 class="h2 fw-light mb-4">Projects:</h2> -->
-    <?php
-          // if (!empty($userprojects)) {
-          //   $count = 0;
-          //   foreach ($userprojects as $userproject) {
-          //     $count++;
+        <h1 class="h2 fw-light mb-4">Services Availed</h1>
+        <form action="" method="POST">
+            <!-- <div class="input-group" style="float: right inherit;">
+        <button name="submitachievement" href="submit.php" class="btn1">Add Achievement</button>
+      </div> -->
+            <div class="shadow-1-strong bg-white my-5 p-5" id="experience">
+                <div class="work-experience-section">
+                    <h2 class="h2 fw-light mb-4">Hospitals:</h2>
+                    <?php
+          if (!empty($userhospitals)) {
+            $count = 0;
+            foreach ($userhospitals as $userhospital) {
+              $count++;
           ?>
-    <!-- <div class="timeline">
-                    <div class="timeline-card timeline-card-info" data-aos="fade-in" data-aos-delay="0">
-                        <div class="timeline-head px-4 pt-3">
+                    <div class="timeline">
+                        <div class="timeline-card timeline-card-info" data-aos="fade-in" data-aos-delay="0">
+                            <div class="timeline-head px-4 pt-3">
 
-                            <div class="h6">Project: <span class="text-muted h6"><?php echo $count; ?></span></div>
-                            <div class="h6">Title: <span
-                                    class="text-muted h6"><?php echo $userproject['name']; ?></span></div>
-                            <div class="h6">Description: <span
-                                    class="text-muted h6"><?php echo $userproject['description']; ?></span></div>
-                            <div class="h6">Keywords: <span
-                                    class="text-muted h6"><?php echo $userproject['keywords']; ?></span></div>
-                            <div class="h6">External File Link: <span
-                                    class="text-muted h6"><?php echo $userproject['external_file']; ?></span></div>
-                            <div class="h6">Verification: <span class="text-muted h6"> -->
-    <?php
-                        // if ($userproject['is_verified'] == 1) {
-                        //   echo ("Verified by " . $userproject['v_id']);
-                        // } else {
-                        //   echo ("Not Verified");
-                        // }
-                        ?>
-    <!-- </span></div>
-                            <a href="view_specific_achievement.php?a_id=<?php echo $userproject['a_id'] ?>">
-                                <div class="h6"><span
-                                        class="text-muted h6"><?php echo ("Click To View Details"); ?></span></div>
-                            </a>
-                            <div class="h6">Image: <span class="text-muted h6"></span></div>
-                            <div class="myimg"><img src="./images/<?php echo $userproject['file_link']; ?>"
-                                    style="width:400px;height: 250px;border-radius: 10px; border: 6px solid #f08c09; padding: 3px;">
-                            </div>
-
-                            <div class="input-group" style="float: right inherit;">
-                                <a class="btn5" style="text-decoration: none; color: white;"
-                                    href="delete.php?d_id=<?php echo $userproject["a_id"] ?>">Delete</a>
-                            </div>
-                            <br></br> -->
-    <!-- <br></br> -->
-    <!-- </div>
-                    </div>
-                </div> -->
-    <?php
-    // }
-    // }
-    ?>
-    </div>
-    </div>
-
-    <!-- <div class="shadow-1-strong bg-white my-5 p-5" id="experience">
-        <div class="work-experience-section">
-            <h2 class="h2 fw-light mb-4">Internship:</h2>
-            <?php
-          // if (!empty($userinternships)) {
-          //   $count = 0;
-          //   foreach ($userinternships as $userinternship) {
-          //     $count++;
-          ?>
-            <div class="timeline">
-                <div class="timeline-card timeline-card-info" data-aos="fade-in" data-aos-delay="0">
-                    <div class="timeline-head px-4 pt-3">
-
-                        <div class="h6">Internship: <span class="text-muted h6"><?php echo $count; ?></span>
-                        </div>
-                        <div class="h6">Title: <span class="text-muted h6"><?php echo $userinternship['name']; ?></span>
-                        </div>
-                        <div class="h6">Description: <span
-                                class="text-muted h6"><?php echo $userinternship['description']; ?></span></div>
-                        <div class="h6">Keywords: <span
-                                class="text-muted h6"><?php echo $userinternship['keywords']; ?></span></div>
-                        <div class="h6">External File Link: <span
-                                class="text-muted h6"><?php echo $userinternship['external_file']; ?></span>
-                        </div>
-                        <div class="h6">Verification: <span class="text-muted h6">
-                                <?php
-                        if ($userinternship['is_verified'] == 1) {
-                          echo ("Verified by " . $userinternship['v_id']);
+                                <div class="h6">Hospital: <span class="text-muted h6"><?php echo $count; ?></span></div>
+                                <div class="h6">Title: <span
+                                        class="text-muted h6"><?php echo $userhospital['name']; ?></span></div>
+                                <div class="h6">Description: <span
+                                        class="text-muted h6"><?php echo $userhospital['description']; ?></span></div>
+                                <div class="h6">Keywords: <span
+                                        class="text-muted h6"><?php echo $userhospital['keywords']; ?></span></div>
+                                <div class="h6">External File Link: <span
+                                        class="text-muted h6"><?php echo $userhospital['external_file']; ?></span></div>
+                                <div class="h6">Verification: <span class="text-muted h6">
+                                        <?php
+                        if ($userhospital['is_verified'] == 1) {
+                          echo ("Verified by " . $userhospital['v_id']);
                         } else {
                           echo ("Not Verified");
                         }
                         ?>
-                            </span></div>
-                        <a href="view_specific_achievement.php?a_id=<?php echo $userinternship['a_id'] ?>">
-                            <div class="h6"><span class="text-muted h6"><?php echo ("Click To View Details"); ?></span>
-                            </div>
-                        </a>
-                        <div class="h6">Image: <span class="text-muted h6"></span></div>
-                        <div class="myimg"><img src="./images/<?php echo $userinternship['file_link']; ?>"
-                                style="width:400px;height: 250px;border-radius: 10px; border: 6px solid #f08c09; padding: 3px;">
-                        </div>
+                                    </span></div>
+                                <a href="view_specific_achievement.php?a_id=<?php echo $userhospital['a_id'] ?>">
+                                    <div class="h6"><span
+                                            class="text-muted h6"><?php echo ("Click To View Details"); ?></span></div>
+                                </a>
+                                <div class="h6">Image: <span class="text-muted h6"></span></div>
+                                <div class="myimg"><img src="./images/<?php echo $userhospital['file_link']; ?>"
+                                        style="width:400px;height: 250px;border-radius: 10px; border: 6px solid #f08c09; padding: 3px;">
+                                </div>
 
-                        <div class="input-group" style="float: right inherit;">
-                            <a class="btn5" style="text-decoration: none; color: white;"
-                                href="delete.php?d_id=<?php echo $userinternship["a_id"] ?>">Delete</a>
+                                <div class="input-group" style="float: right inherit;">
+                                    <a class="btn5" style="text-decoration: none; color: white;"
+                                        href="delete.php?d_id=<?php echo $userproject["a_id"] ?>">Delete</a>
+                                </div>
+                                <br></br>
+                                <!-- <br></br> -->
+                            </div>
                         </div>
-                        <br></br> -->
-    <!-- <br></br> -->
-    <!-- </div>
                     </div>
-                </div> -->
-    <?php
+                    <?php
             }
-          // }
+          }
           ?>
-    <!-- </div>
-        </div>
-
-        <div class="shadow-1-strong bg-white my-5 p-5" id="experience">
-            <div class="work-experience-section">
-                <h2 class="h2 fw-light mb-4">Honors & Awards:</h2> -->
-    <?php
-          // if (!empty($userawards)) {
-          //   $count = 0;
-          //   foreach ($userawards as $useraward) {
-          //     $count++;
-          ?>
-    <!-- <div class="timeline">
-                    <div class="timeline-card timeline-card-info" data-aos="fade-in" data-aos-delay="0">
-                        <div class="timeline-head px-4 pt-3">
-                            <div class="h6">Honors: <span class="text-muted h6"><?php echo $count; ?></span></div>
-                            <div class="h6">Title: <span class="text-muted h6"><?php echo $useraward['name']; ?></span>
-                            </div>
-                            <div class="h6">Description: <span
-                                    class="text-muted h6"><?php echo $useraward['description']; ?></span></div>
-                            <div class="h6">Keywords: <span
-                                    class="text-muted h6"><?php echo $useraward['keywords']; ?></span></div>
-                            <div class="h6">External File Link: <span
-                                    class="text-muted h6"><?php echo $useraward['external_file']; ?></span></div>
-                            <div class="h6">Verification: <span class="text-muted h6">
-                                    <?php
-                        if ($useraward['is_verified'] == 1) {
-                          echo ("Verified by " . $useraward['v_id']);
-                        } else {
-                          echo ("Not Verified");
-                        }
-                        ?>
-                                </span></div>
-                            <a href="view_specific_achievement.php?a_id=<?php echo $useraward['a_id'] ?>">
-                                <div class="h6"><span
-                                        class="text-muted h6"><?php echo ("Click To View Details"); ?></span></div>
-                            </a>
-                            <div class="h6">Image: <span class="text-muted h6"></span></div>
-                            <div class="myimg"><img src="./images/<?php echo $useraward['file_link']; ?>"
-                                    style="width:400px;height: 250px;border-radius: 10px; border: 6px solid #f08c09; padding: 3px;">
-                            </div>
-
-                            <div class="input-group" style="float: right inherit;">
-                                <a class="btn5" style="text-decoration: none; color: white;"
-                                    href="delete.php?d_id=<?php echo $useraward["a_id"] ?>">Delete</a>
-                            </div>
-                            <br></br> -->
-    <!-- <br></br> -->
-    </div>
-    </div>
-    </div>
-    <?php
-            // }
-          // }
-          ?>
-    </div>
-    </div>
-
-    <!-- <div class="shadow-1-strong bg-white my-5 p-5" id="experience">
-            <div class="work-experience-section">
-                <h2 class="h2 fw-light mb-4">Extra-Curricular Activities:</h2> -->
-    <?php
-          // if (!empty($userextracurricularactivities)) {
-          //   $count = 0;
-          //   foreach ($userextracurricularactivities as $userextracurricularactivity) {
-          //     $count++;
-          ?>
-    <!-- <div class="timeline">
-                    <div class="timeline-card timeline-card-info" data-aos="fade-in" data-aos-delay="0">
-                        <div class="timeline-head px-4 pt-3">
-                            <div class="h6">Activity: <span class="text-muted h6"><?php echo $count; ?></span></div>
-                            <div class="h6">Title: <span
-                                    class="text-muted h6"><?php echo $userextracurricularactivity['name']; ?></span>
-                            </div>
-                            <div class="h6">Description: <span
-                                    class="text-muted h6"><?php echo $userextracurricularactivity['description']; ?></span>
-                            </div>
-                            <div class="h6">Keywords: <span
-                                    class="text-muted h6"><?php echo $userextracurricularactivity['keywords']; ?></span>
-                            </div>
-                            <div class="h6">External File Link: <span
-                                    class="text-muted h6"><?php echo $userextracurricularactivity['external_file']; ?></span>
-                            </div>
-                            <div class="h6">Verification: <span class="text-muted h6"> -->
-    <?php
-                        // if ($userextracurricularactivity['is_verified'] == 1) {
-                        //   echo ("Verified by " . $userextracurricularactivity['v_id']);
-                        // } else {
-                        //   echo ("Not Verified");
-                        // }
-                        ?>
-    <!-- </span></div>
-                            <a
-                                href="view_specific_achievement.php?a_id=<?php echo $userextracurricularactivity['a_id'] ?>">
-                                <div class="h6"><span
-                                        class="text-muted h6"><?php echo ("Click To View Details"); ?></span></div>
-                            </a>
-                            <div class="h6">Image: <span class="text-muted h6"></span></div>
-                            <div class="myimg"><img
-                                    src="./images/<?php echo $userextracurricularactivity['file_link']; ?>"
-                                    style="width:400px;height: 250px;border-radius: 10px; border: 6px solid #f08c09; padding: 3px;">
-                            </div>
-
-                            <div class="input-group" style="float: right inherit;">
-                                <a class="btn5" style="text-decoration: none; color: white;"
-                                    href="delete.php?d_id=<?php echo $userextracurricularactivity["a_id"] ?>">Delete</a>
-                            </div>
-                            <br></br> -->
-    <!-- <br></br> -->
-    </div>
-    </div>
-    </div>
-    <?php
-          //   }
-          // }
-          ?>
-    <!-- </div>
-        </div>
-
-        <div class="shadow-1-strong bg-white my-5 p-5" id="education">
-            <div class="education-section">
-                <h2 class="h2 fw-light mb-4">Events Participation Badges:</h2>
-                <div class="List"> -->
-    <ol>
-        <?php
-              // if (!empty($userstudentevents)) {
-              //   $count = 0;
-              //   foreach ($userstudentevents as $userstudentevent) {
-              //     $count++;
-              ?>
-        <!-- <div class="h6">Number: <span class="text-muted h6"><?php echo $count; ?></span></div>
-                        <a
-                            href="view_specific_event.php?e_id=<?php echo $userstudentevent['e_id'] ?>"><?php echo htmlspecialchars($userstudentevent['name']) ?></a><br></br>
-                        <?php 
-              //   }
-              // }
-              ?>
-                        
-        <li>UIU megahunt</li> -->
-        <!-- </ol>
                 </div>
             </div>
-        </div>
-        </div>
-        </div> -->
-        <?php
-      // }
+
+            <div class="shadow-1-strong bg-white my-5 p-5" id="experience">
+                <div class="work-experience-section">
+                    <h2 class="h2 fw-light mb-4">Police Stations:</h2>
+                    <?php
+          if (!empty($userpolicestations)) {
+            $count = 0;
+            foreach ($userpolicestations as $userpolicestation) {
+              $count++;
+          ?>
+                    <div class="timeline">
+                        <div class="timeline-card timeline-card-info" data-aos="fade-in" data-aos-delay="0">
+                            <div class="timeline-head px-4 pt-3">
+
+                                <div class="h6">Police Station: <span class="text-muted h6"><?php echo $count; ?></span>
+                                </div>
+                                <div class="h6">Title: <span
+                                        class="text-muted h6"><?php echo $userpolicestation['name']; ?></span></div>
+                                <div class="h6">Description: <span
+                                        class="text-muted h6"><?php echo $userpolicestation['description']; ?></span>
+                                </div>
+                                <div class="h6">Keywords: <span
+                                        class="text-muted h6"><?php echo $userpolicestation['keywords']; ?></span></div>
+                                <div class="h6">External File Link: <span
+                                        class="text-muted h6"><?php echo $userpolicestation['external_file']; ?></span>
+                                </div>
+                                <div class="h6">Verification: <span class="text-muted h6">
+                                        <?php
+                        if ($userpolicestation['is_verified'] == 1) {
+                          echo ("Verified by " . $userpolicestation['v_id']);
+                        } else {
+                          echo ("Not Verified");
+                        }
+                        ?>
+                                    </span></div>
+                                <a href="view_specific_achievement.php?a_id=<?php echo $userpolicestation['a_id'] ?>">
+                                    <div class="h6"><span
+                                            class="text-muted h6"><?php echo ("Click To View Details"); ?></span></div>
+                                </a>
+                                <div class="h6">Image: <span class="text-muted h6"></span></div>
+                                <div class="myimg"><img src="./images/<?php echo $userpolicestation['file_link']; ?>"
+                                        style="width:400px;height: 250px;border-radius: 10px; border: 6px solid #f08c09; padding: 3px;">
+                                </div>
+
+                                <div class="input-group" style="float: right inherit;">
+                                    <a class="btn5" style="text-decoration: none; color: white;"
+                                        href="delete.php?d_id=<?php echo $userinternship["a_id"] ?>">Delete</a>
+                                </div>
+                                <br></br>
+                                <!-- <br></br> -->
+                            </div>
+                        </div>
+                    </div>
+                    <?php
+            }
+          }
+          ?>
+                </div>
+            </div>
+
+            <div class="shadow-1-strong bg-white my-5 p-5" id="experience">
+                <div class="work-experience-section">
+                    <h2 class="h2 fw-light mb-4">Fire Stations:</h2>
+                    <?php
+          if (!empty($userfirestations)) {
+            $count = 0;
+            foreach ($userfirestations as $userfirestation) {
+              $count++;
+          ?>
+                    <div class="timeline">
+                        <div class="timeline-card timeline-card-info" data-aos="fade-in" data-aos-delay="0">
+                            <div class="timeline-head px-4 pt-3">
+                                <div class="h6">Honors: <span class="text-muted h6"><?php echo $count; ?></span></div>
+                                <div class="h6">Title: <span
+                                        class="text-muted h6"><?php echo $userfirestation['name']; ?></span></div>
+                                <div class="h6">Description: <span
+                                        class="text-muted h6"><?php echo $userfirestation['description']; ?></span>
+                                </div>
+                                <div class="h6">Keywords: <span
+                                        class="text-muted h6"><?php echo $userfirestation['keywords']; ?></span></div>
+                                <div class="h6">External File Link: <span
+                                        class="text-muted h6"><?php echo $userfirestation['external_file']; ?></span>
+                                </div>
+                                <div class="h6">Verification: <span class="text-muted h6">
+                                        <?php
+                        if ($userfirestation['is_verified'] == 1) {
+                          echo ("Verified by " . $userfirestation['v_id']);
+                        } else {
+                          echo ("Not Verified");
+                        }
+                        ?>
+                                    </span></div>
+                                <a href="view_specific_achievement.php?a_id=<?php echo $userfirestation['a_id'] ?>">
+                                    <div class="h6"><span
+                                            class="text-muted h6"><?php echo ("Click To View Details"); ?></span></div>
+                                </a>
+                                <div class="h6">Image: <span class="text-muted h6"></span></div>
+                                <div class="myimg"><img src="./images/<?php echo $userfirestation['file_link']; ?>"
+                                        style="width:400px;height: 250px;border-radius: 10px; border: 6px solid #f08c09; padding: 3px;">
+                                </div>
+
+                                <div class="input-group" style="float: right inherit;">
+                                    <a class="btn5" style="text-decoration: none; color: white;"
+                                        href="delete.php?d_id=<?php echo $useraward["a_id"] ?>">Delete</a>
+                                </div>
+                                <br></br>
+                            </div>
+                        </div>
+                    </div>
+                    <?php
+            }
+          }
+          ?>
+                </div>
+            </div>
+            <?php
+      }
 ?>
 
-        <!-- <div class="shadow-1-strong bg-white my-5 p-5 d-print-none" id="portfolio">
+            <!-- <div class="shadow-1-strong bg-white my-5 p-5 d-print-none" id="portfolio">
     <div class="portfolio-section">
       <h2 class="h2 fw-light mb-4">Portfolio</h2>
       <div class="row g-0">
@@ -840,10 +739,10 @@ if (isset($_POST['submitsearch'])) {
     </div>
   </div> -->
 
-        <!-- </footer> -->
-        <script src="scripts/mdb.min.js?ver=1.2.1"></script>
-        <script src="scripts/aos.js?ver=1.2.1"></script>
-        <script src="scripts/main.js?ver=1.2.1"></script>
+            <!-- </footer> -->
+            <script src="scripts/mdb.min.js?ver=1.2.1"></script>
+            <script src="scripts/aos.js?ver=1.2.1"></script>
+            <script src="scripts/main.js?ver=1.2.1"></script>
 </body>
 
 </html>

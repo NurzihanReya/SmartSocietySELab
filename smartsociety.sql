@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 17, 2023 at 09:12 PM
+-- Generation Time: Aug 19, 2023 at 08:56 PM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 7.4.27
 
@@ -91,12 +91,33 @@ INSERT INTO `organizations` (`o_id`, `name`, `email`, `phone`, `street`, `house`
 CREATE TABLE `reports` (
   `r_id` int(11) NOT NULL,
   `type` varchar(50) DEFAULT NULL,
-  `r_date` date DEFAULT NULL,
-  `r_time` time DEFAULT NULL,
+  `r_time` datetime DEFAULT NULL,
   `flag` int(11) DEFAULT NULL,
   `u_id` int(11) DEFAULT NULL,
   `b_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `reports2`
+--
+
+CREATE TABLE `reports2` (
+  `r_id` int(11) NOT NULL,
+  `type` text NOT NULL,
+  `r_time` datetime NOT NULL,
+  `flag` int(11) NOT NULL,
+  `u_id` int(11) NOT NULL,
+  `b_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `reports2`
+--
+
+INSERT INTO `reports2` (`r_id`, `type`, `r_time`, `flag`, `u_id`, `b_id`) VALUES
+(1, 'fire', '2023-08-19 19:18:12', 1, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -177,6 +198,12 @@ ALTER TABLE `reports`
   ADD KEY `b_id` (`b_id`);
 
 --
+-- Indexes for table `reports2`
+--
+ALTER TABLE `reports2`
+  ADD PRIMARY KEY (`r_id`);
+
+--
 -- Indexes for table `services`
 --
 ALTER TABLE `services`
@@ -198,6 +225,12 @@ ALTER TABLE `users`
 --
 ALTER TABLE `blocks`
   MODIFY `b_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT for table `reports2`
+--
+ALTER TABLE `reports2`
+  MODIFY `r_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `users`

@@ -38,7 +38,7 @@ if(isset($_GET['b_id'])){
     $sql="SELECT *
           FROM blocks
           INNER JOIN organizations
-          WHERE organizations.b_id = $block_id";  //?
+          WHERE organizations.b_id = $block_id";
     $result=mysqli_query($conn,$sql);
     $block=mysqli_fetch_assoc($result);
     mysqli_free_result($result);

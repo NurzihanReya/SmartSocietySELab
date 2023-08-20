@@ -6,23 +6,25 @@ session_start();
 
 if(isset($_SESSION['username'])){
   $username=mysqli_real_escape_string($conn,$_SESSION['username']);
+  $type=$_SESSION['type'];
 
-  if(strlen($username)==9 && is_numeric($username)){
-    $sql = "SELECT * FROM student WHERE s_id='$username'";
+  if($type=="user"){
+    $sql = "SELECT * FROM users WHERE name='$username'";
     $result = mysqli_query($conn, $sql);
     $user=mysqli_fetch_assoc($result);
   }
   else{
-    $sql = "SELECT * FROM verifier WHERE v_id='$username'";
+    $sql = "SELECT * FROM vorganizations WHERE name='$username'";
     $result = mysqli_query($conn, $sql);
     $user=mysqli_fetch_assoc($result);
-
-    $sql2 = "SELECT * FROM notifications INNER JOIN achievements ON notifications.a_id=achievements.a_id WHERE notifications.v_id='$username' AND notifications.ntf_status=0";
-    $result2 = mysqli_query($conn, $sql2);
-    $notifications=mysqli_fetch_all($result2,MYSQLI_ASSOC);
   }
+
+  $sql2 = "SELECT * FROM reports2 INNER JOIN blocks ON reports2.b_id=blocks.b_id WHERE reports2.flag=1";
+    $result2 = mysqli_query($conn, $sql2);
+    $reports=mysqli_fetch_all($result2,MYSQLI_ASSOC);
   
   $_SESSION['username'] = $username;
+  $_SESSION['type'] = $type;
   // mysqli_free_result($result);
 
 }
@@ -136,7 +138,7 @@ if(isset($_POST['submitsearch'])){
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>UIUSAT - Notifications</title>
+    <title>SS - Notifications</title>
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="crossorigin"/>
     <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&amp;family=Roboto:wght@300;400;500;700&amp;display=swap"/>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&amp;family=Roboto:wght@300;400;500;700&amp;display=swap" media="print" onload="this.media='all'"/>
@@ -169,7 +171,7 @@ if(isset($_POST['submitsearch'])){
           <div class="site-nav"> 
          <!-- Nav bar Start -->
             <nav class="navbar navbar-expand-xl navbar-dark bg-dark">
-	<a href="#" class="navbar-brand"><i class="fa fa-cube"></i>UIU<b>SAT</b></a>  		
+	<a href="#" class="navbar-brand"><i class="fa fa-cube"></i>Smart<b>Society</b></a>  		
 	<button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
 		<span class="navbar-toggler-icon"></span>
 	</button>
@@ -183,25 +185,25 @@ if(isset($_POST['submitsearch'])){
 		</form> -->
     <form method="POST">
       <div class="search">
-      <input type="text" name="searchtext" id="search" placeholder="Search" style="position:relative; top: 40px; width: 200px; left:-50px; padding:6px; border-radius:5px;">
+      <input type="text" name="searchtext" id="search" placeholder="Search" style="position:relative;  width: 200px; left:-50px; padding:6px; border-radius:5px;">
       <!-- <div class="col col-lg-6"> -->
       <!-- <label for="exampleFormControlInput1" class="form-label">Choose From Below</label> -->
-        <select class="form-select" name="searchtype" aria-label="Default select example" style="position:relative; left: 170px; width: 150px">
+        <!-- <select class="form-select" name="searchtype" aria-label="Default select example" style="position:relative; left: 170px; width: 150px">
           <option selected>Filter</option>
           <option value="Students">Students</option>
           <option value="Verifiers">Verifiers</option>
           <option value="Achievements">Achievements</option>
           <option value="Events">Events</option>
           <option value="Notices">Notices</option>
-        </select>
+        </select> -->
       <!-- </div> -->
         <!-- <button name="submitfiltersearch" class="btn">Search</button> -->
-        <button name="submitsearch" class="btn" style="position:relative; top: -40px; left: 280px; background-color:#FFF; ">Search</button>
+        <button name="submitsearch" class="btn" style="position:left;  left: 280px; background-color:#FFF; ">Search</button>
       </div>
     </form>
 		<div class="navbar-nav ml-auto" style="position:relative; left:280px">
     <?php
-      if(strlen($username)==9 && is_numeric($username)){
+      if($type=="user"){
       ?>
         <a href="studenthome.php" class="nav-item nav-link active"><i class="fa fa-home"></i><span>Home</span></a>
       <?php
@@ -215,22 +217,22 @@ if(isset($_POST['submitsearch'])){
 	
 			<a href="profile.php" class="nav-item nav-link"><i class="fa fa-users"></i><span>Profile</span></a>
 
-			<a href="view_all_events.php" class="nav-item nav-link"><i class="fa fa-briefcase"></i><span>Events</span></a>
-			<a href="view_all_notices.php" class="nav-item nav-link"><i class="fa fa-envelope"></i><span>Notices</span></a>		
+			<a href="view_all_events.php" class="nav-item nav-link"><i class="fa fa-briefcase"></i><span>Blocks</span></a>
+			<!-- <a href="view_all_notices.php" class="nav-item nav-link"><i class="fa fa-envelope"></i><span>Notices</span></a>		 -->
 			<a href="notification.php" class="nav-item nav-link"><i class="fa fa-bell"></i><span>Notifications</span></a>
       <a href="logout.php" class="nav-item nav-link"><i class="fa-solid fa-right-from-bracket"></i><span>Log Out</span></a>
 			<?php
-        if (strlen($username) == 9 && is_numeric($username)) {
+        if ($type=="user") {
         ?>
           <div class="nav-item dropdown">
-            <a href="profile.php" data-toggle="dropdown" class="nav-item nav-link dropdown-toggle user-action"><img src="images/student.jpg" class="avatar" alt="Avatar"> Student </a>
+            <a href="profile.php" data-toggle="dropdown" class="nav-item nav-link dropdown-toggle user-action"><img src="images/student.jpg" class="avatar" alt="Avatar"> User </a>
           </div>
         <?php
         }
         else {
         ?>
           <div class="nav-item dropdown">
-            <a href="profile.php" data-toggle="dropdown" class="nav-item nav-link dropdown-toggle user-action"><img src="images/verifier.jpg" class="avatar" alt="Avatar"> Verifier </a>
+            <a href="profile.php" data-toggle="dropdown" class="nav-item nav-link dropdown-toggle user-action"><img src="images/verifier.jpg" class="avatar" alt="Avatar"> Organization </a>
           </div>
         <?php
         }
@@ -263,11 +265,10 @@ if(isset($_POST['submitsearch'])){
   top: 30px; background-color:#fff;height:1200px;">
        
       <?php
-      if(!(strlen($username)==9 && is_numeric($username))){
-        foreach($notifications as $notification){
+        foreach($reports as $report){
         ?>
           <div class="notific">
-        <div class="note1" style="height: 120px;
+        <div class="note1" style="height: 150px;
     width: 900px;
     background-color:#d18c25;
     border-radius: 0px;
@@ -275,8 +276,10 @@ if(isset($_POST['submitsearch'])){
     border-right: 5px solid #8143a0;
     color: #fff;
     padding-bottom:15px ;
-    position: relative;left:7px; "> <div class="textbox"style="position:relative;left:20px;top:20px"><u><h5><?php echo $notification['s_id']; ?></h5></u></div>
-  <div class="textdetail"style="position:relative;left:20px;top:20px"><a href="view_specific_achievement.php?verifya_id=<?php echo $notification['a_id'] ?>"><?php echo $notification['name']; ?></a></div>
+    position: relative;left:7px; "> <div class="textbox"style="position:relative;left:20px;top:20px"><u><h5><?php echo $report['b_id']; ?></h5></u></div>
+    <div class="textbox"style="position:relative;left:20px;top:20px"><u><h5><?php echo $report['type']; ?></h5></u></div>
+    <div class="textbox"style="position:relative;left:20px;top:20px"><u><h5><?php echo $report['r_time']; ?></h5></u></div>
+  <div class="textdetail"style="position:relative;left:20px;top:20px"><a href="view_specific_achievement.php?verifya_id=<?php echo $report['b_id'] ?>"><?php echo "Block".$report['b_id']; ?></a></div>
   <!-- <div class="time"style="position:relative;left:800px;top:20px;font-size:15px;">10.30pm</div> -->
     <!-- <div class="design"style="height: 120px;
     width: 900px;
@@ -290,7 +293,6 @@ if(isset($_POST['submitsearch'])){
   </div> 
       <?php
         }
-      }
     ?>
       </div>
          

@@ -1120,7 +1120,9 @@ footer .inner-content p a {
 
 /* Team Members */
 
-
+.team-members {
+	margin-top: 100px;
+}
 
 .team-member {
 	border: 1px solid #eee;

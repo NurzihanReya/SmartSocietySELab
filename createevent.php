@@ -128,7 +128,7 @@ if (isset($_POST['submit'])) {
           FROM blocks
           WHERE b_id=$block";
   $resultblock = mysqli_query($conn, $sqlblock);
-  $blockarr = mysqli_fetch_assoc($resultblock); 
+  $blockarr = mysqli_fetch_assoc($resultblock);
 
   if($blockarr['occupied']==0){
     $image_link = $_FILES['file']['name'];
@@ -143,8 +143,8 @@ if (isset($_POST['submit'])) {
       $msg = "Error in uploading";
     }
   
-    $sql = "INSERT INTO services( type, records, o_id, image) 
-              VALUES ('$typeorg','$extrafield','$orgarr[o_id]','$image_link')";
+    $sql = "INSERT INTO services(s_id, type, records, o_id, image) 
+              VALUES ('','$typeorg','$extrafield','$orgarr[o_id]','$image_link')";
     $result = mysqli_query($conn, $sql);
   
     //if ($result) {
@@ -235,26 +235,25 @@ if (isset($_POST['submit'])) {
             <form method="POST">
                 <div class="search">
                     <input type="text" name="searchtext" id="search" placeholder="Search"
-                        style="position:relative; top: 40px; width: 200px; left:-40px; padding:6px; border-radius:5px;">
+                        style="position:relative;  width: 200px; left:-40px; padding:6px; border-radius:5px;">
 
 
 
                     <!-- <div class="col col-lg-6"> -->
                     <!-- <label for="exampleFormControlInput1" class="form-label">Choose From Below</label> -->
-                    <select class="form-select" name="searchtype" aria-label="Default select example"
-                        style="position:relative; left: 170px; width: 150px">
-                        <option selected>Filter</option>
-                        <option value="Students">Students</option>
-                        <option value="Verifiers">Verifiers</option>
-                        <option value="Achievements">Achievements</option>
-                        <option value="Events">Events</option>
-                        <option value="Notices">Notices</option>
-                    </select>
+                    <!-- <select class="form-select" name="searchtype" aria-label="Default select example" style="position:relative; left: 170px; width: 150px">
+            <option selected>Filter</option>
+            <option value="Students">Students</option>
+            <option value="Verifiers">Verifiers</option>
+            <option value="Achievements">Achievements</option>
+            <option value="Events">Events</option>
+            <option value="Notices">Notices</option>
+          </select> -->
                     <!-- </div> -->
 
                     <!-- <button name="submitfiltersearch" class="btn">Search</button> -->
                     <button name="submitsearch" class="btn"
-                        style="position:relative; top: -37px; left: 340px; background-color:#FFF; ">Search</button>
+                        style="position:left;  left: 340px; background-color:#FFF; ">Search</button>
                 </div>
             </form>
             <div class="navbar-nav ml-auto" style="position:relative; left:280px">
@@ -276,8 +275,7 @@ if (isset($_POST['submit'])) {
 
                 <a href="view_all_events.php" class="nav-item nav-link"><i
                         class="fa fa-briefcase"></i><span>Events</span></a>
-                <a href="view_all_notices.php" class="nav-item nav-link"><i
-                        class="fa fa-envelope"></i><span>Notices</span></a>
+                <!-- <a href="view_all_notices.php" class="nav-item nav-link"><i class="fa fa-envelope"></i><span>Notices</span></a> -->
                 <a href="notification.php" class="nav-item nav-link"><i
                         class="fa fa-bell"></i><span>Notifications</span></a>
                 <a href="logout.php" class="nav-item nav-link"><i class="fa-solid fa-right-from-bracket"></i><span>Log
